@@ -6,11 +6,11 @@ THE_TOPIC = "spain/valencia/upv/chat"
 CLIENT_ID = str(random.randint(0, 100000)) # make sure it does not repeate
 
 def on_connect (client, userdata, flags, rc):
-    print("\n Connected to {} \n".format(client))
+    print("\n Connected  \n")
     client.subscribe(THE_TOPIC, qos=0)
     
 def on_subscribe(client, userdata, flags, rc):
-    print("\n subscribed to {} \n".format(client))
+    print("\n subscribed \n")
 
 def on_message(client, userdata, msg): 
     #print(msg.payload.decode("utf-8"))
