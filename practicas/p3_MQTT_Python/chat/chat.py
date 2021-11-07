@@ -5,7 +5,11 @@ THE_TOPIC = "spain/valencia/upv/chat"
 CLIENT_ID = "Fran"
 
 def on_connect (client, userdata, flags, rc):
+    print("\n Connected to {} \n".format(client))
     client.subscribe(THE_TOPIC, qos=0)
+    
+def on_subscribe(client, userdata, flags, rc):
+    print("\n subscribed to {} \n".format(client))
 
 def on_message(client, userdata, msg): 
     #print(msg.payload.decode("utf-8"))
@@ -19,6 +23,7 @@ client = mqtt.Client(client_id=CLIENT_ID,
 
 client.on_connect = on_connect
 client.on_message = on_message
+client.on_subscribe = on_subscribe
 
 client.username_pw_set(CLIENT_ID, password=None)
 client.connect(THE_BROKER, port=1883, keepalive=60)
