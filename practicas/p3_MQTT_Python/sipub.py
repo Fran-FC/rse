@@ -1,11 +1,13 @@
-# File: sisub.py
+# File: sipub.py
 #
-# The simplest MQTT subscriber.
+# The simplest MQTT producer.
+
+import random
+import time
 
 import paho.mqtt.client as mqtt
 
 THE_BROKER = "test.mosquitto.org"
-#THE_TOPIC = "$SYS/#" # subscribe to all topics
 THE_TOPIC = "spain/valencia/upv"
 CLIENT_ID = ""
 
@@ -14,11 +16,10 @@ def on_connect(client, userdata, flags, rc):
     print("Connected to ", client._host, "port: ", client._port)
     print("Flags: ", flags, "returned code: ", rc)
 
-    client.subscribe(THE_TOPIC, qos=0)
+# The callback for when a message is published.
+def on_publish(client, userdata, mid):
+    print("sipub: msg published (mid={})".format(mid))
 
-# The callback for when a message is received from the server.
-def on_message(client, userdata, msg):
-    print("sisub: msg received with topic: {} and payload: {}".format(msg.topic, str(msg.payload)))
 
 client = mqtt.Client(client_id=CLIENT_ID, 
                      clean_session=True, 
@@ -27,11 +28,24 @@ client = mqtt.Client(client_id=CLIENT_ID,
                      transport="tcp")
 
 client.on_connect = on_connect
-client.on_message = on_message
+client.on_publish = on_publish
 
 client.username_pw_set(None, password=None)
 client.connect(THE_BROKER, port=1883, keepalive=60)
 
-# Blocking call that processes network traffic, dispatches callbacks and
-# handles reconnecting.
-client.loop_forever()
+client.loop_start()
+
+n = 1
+while True:
+
+    #msg_to_be_sent = random.randint(0, 100)
+    msg_to_be_sent = "_Aqui Fran al habla! {0}_".format(n)
+    client.publish(THE_TOPIC, 
+                   payload=msg_to_be_sent, 
+                   qos=0, 
+                   retain=True)
+
+    time.sleep(1)
+    n = n + 1
+
+client.loop_stop()
