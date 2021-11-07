@@ -1,8 +1,9 @@
 import paho.mqtt.client as mqtt
+import random
 
 THE_BROKER = "test.mosquitto.org"
 THE_TOPIC = "spain/valencia/upv/chat"
-CLIENT_ID = "Fran"
+CLIENT_ID = str(random.randint(0, 100000))
 
 def on_connect (client, userdata, flags, rc):
     print("\n Connected to {} \n".format(client))
