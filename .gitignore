@@ -1,2 +1,3 @@
 horarios/
 *.pdf
+*node_modules*
