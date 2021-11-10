@@ -6,5 +6,6 @@ module.exports = {
         // empezar a calcular 
         
         const price_hour = scraper.scrap();
+        console.log(price_hour);
     }
 }
