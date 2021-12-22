@@ -3,7 +3,7 @@
 
 ### 1. Prueba a ejecutar el comando route en los diferentes dispositivos. Este comando se utiliza cuando se quiere trabajar con la tabla de enrutamiento IP/kernel. Se utiliza principalmente para configurar rutas estáticas a hosts o redes específicas a través de una interfaz. Se utiliza para mostrar o actualizar la tabla de enrutamiento IP/kernel.
 
-```
+```Bash
 mininet> c0 route
 Kernel IP routing table
 Destination     Gateway         Genmask         ...   Iface
@@ -36,7 +36,7 @@ Como vemos, el Gateway de c0 es la máquina local que ejecuta ubuntu en una máq
 ### 3. Utilizando `ping` calcula la diferencia con el caso sin definir los "link parameters".
 
 Observamos que, con un link delay de 10ms, el retraso de un ping pasa a ser de 40ms, ya que se suman 10ms por cada nodo que pasa el mensaje (h1-s1, s1-h2, h2-s1, s1-h1).
-```
+```Bash
 mininet> h1 ping h2
 PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
 64 bytes from 10.0.0.2: icmp_seq=1 ttl=64 time=43.3 ms
@@ -47,7 +47,7 @@ Mientras que una configuración con un link por defecto el delay por ping ronda 
 ### 4. Ahora repite lo mismo pero utilizando el comando iperf. ¿Como?
 
 Midiendo el ancho de banda de los link entre h1 y h2 con la configuración de `# mn --link tc,bw=10,delay=10ms` obtenemos:
-```
+```Bash
 mininet> iperf
 *** Iperf: testing TCP bandwidth between h1 and h2 
 *** Results: ['8.64 Mbits/sec', '11.3 Mbits/sec']
@@ -57,7 +57,7 @@ Mientras que con una configuración estandar el ancho de banda llega a los 49Gbi
 
 ### 5. Indica la secuencias de ordenes para ejecutar el server HTTP en h1 y el cliente get en h2 en la topologia minima de Mininet.
 
-```
+```Bash
 # mn
 --------
 mininet> h1 python2 -m SimpleHTTPServer 80&
@@ -110,11 +110,11 @@ Saving to: 'STDOUT'
 Se ha añadido, antes de iniciar el CLI y después de mininet, este trozo de código:
 
 ```Python
-    info("Printing MAC addresses from hosts\n")
-    info("h1 mac: "+h1.MAC()+"\n")
-    info("h2 mac: "+h2.MAC()+"\n")
-    info("h3 mac: "+h3.MAC()+"\n")
-    info("h4 mac: "+h4.MAC()+"\n")
+info("Printing MAC addresses from hosts\n")
+info("h1 mac: "+h1.MAC()+"\n")
+info("h2 mac: "+h2.MAC()+"\n")
+info("h3 mac: "+h3.MAC()+"\n")
+info("h4 mac: "+h4.MAC()+"\n")
 ```
 
 ### 7- Modifica el codigo de la red de arriba, para que los enlaces sean de 10 Mbps y con un retardo de 10ms. Calcula las prestaciones del enlace entre h1 y h3
