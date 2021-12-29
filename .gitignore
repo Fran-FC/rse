@@ -2,3 +2,4 @@ horarios/
 *.pdf
 *node_modules*
 *.zip
+*pyc 

@@ -6,9 +6,10 @@ port = 465 # ssl port for smtp
 reciever_email = "frafolcm@gmail.com"
 sender_email = "raspberryfranfc@gmail.com"
 password = "proyecto_rse_fran_21"
-#reciever_email = input("Enter your reciever email address: ") 
-#sender_email = input("Enter your sender email address: ")
-#password = input("Enter the sender email password: ")
+
+reciever_email = ""
+with open("config/config.json", r) as config:
+        reciever_email = config.readLine()
 
 # Create a secure SSL context
 context = ssl.create_default_context()
