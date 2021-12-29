@@ -1,15 +1,22 @@
-import smtplib, ssl
+from os import confstr
+import smtplib, ssl, json
 import time
 
 port = 465 # ssl port for smtp
 
-reciever_email = "frafolcm@gmail.com"
-sender_email = "raspberryfranfc@gmail.com"
-password = "proyecto_rse_fran_21"
+config_path = "/home/pi/coding/rse/proyecto_py/config/config.json"
 
+sender_email = ""
+password = ""
 reciever_email = ""
-with open("config/config.json", r) as config:
-        reciever_email = config.readLine()
+with open(config_path) as fd:
+    fconfig = fd.read()
+    jconfig = json.loads(fconfig)
+
+    reciever_email = jconfig["reciever_email"] 
+    sender_email = jconfig["sender_email"]
+    password = jconfig["sender_password"]
+
 
 # Create a secure SSL context
 context = ssl.create_default_context()
