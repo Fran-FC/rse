@@ -33,6 +33,5 @@ def notify_cheapest_hour(price_min, hour_min):
     send_email(msg)
     minutes_remaining = hour_min*60-time.localtime().tm_hour*60-time.localtime().tm_min
 
-    print("Waiting to send {} minutes".format(minutes_remaining))
-    time.sleep(minutes_remaining*60)
+    time.sleep(minutes_remaining*60-1)
     send_email(msg)
