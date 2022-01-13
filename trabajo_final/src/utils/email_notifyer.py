@@ -23,8 +23,13 @@ with open(config_path) as fd:
 context = ssl.create_default_context()
 
 def notify_cheapest_hour(price_min, hour_min):
-    msg = "El precio mas bajo es {0}kW/h a las {1} horas".format(price_min/1000, hour_min)
-    msg = msg + "\nTabla de precios en: http://www.tarifadeluz.com"
+    msg = """
+    Subject: Precio de la luz más barato
+
+    El precio mas bajo es {0}kW/h a las {1} horas
+    Tabla de precios en: http://www.tarifadeluz.com
+    """.format(price_min/1000, hour_min)
+
     if hour_min == 0:
         hour_min = 24
     send_email(msg)
