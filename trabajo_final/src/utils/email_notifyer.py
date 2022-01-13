@@ -2,11 +2,7 @@ import smtplib, ssl, json, os
 import time
 
 port = 465 # ssl port for smtp
-
-pwd = os.getcwd()
-config_path = pwd + "/config/config.json"
-print(config_path)
-
+config_path = os.getcwd() + "/config/config.json"
 sender_email = ""
 password = ""
 reciever_email = ""
@@ -22,21 +18,24 @@ with open(config_path) as fd:
 # Create a secure SSL context
 context = ssl.create_default_context()
 
-def notify_cheapest_hour(price_min, hour_min):
-    msg = """
-    Subject: Precio de la luz más barato
+def send_mail(msg):
+    with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+        server.login(sender_email, password)
+        server.sendmail(sender_email, reciever_email, msg)
 
-    El precio mas bajo es {0}kW/h a las {1} horas
-    Tabla de precios en: http://www.tarifadeluz.com
-    """.format(price_min/1000, hour_min)
+def notify_cheapest_hour(price_min, hour_min):
+    price_min = price_min/1000
+    msg = "Subject: Precio de la luz mas barato\n\nEl precio mas bajo es {0}kW/h a las {1} horas\nTabla de precios en: http://www.tarifadeluz.com".format(price_min, hour_min)
+
+    send_mail(msg)
 
     if hour_min == 0:
         hour_min = 24
-    send_email(msg)
     minutes_remaining = hour_min*60-time.localtime().tm_hour*60-time.localtime().tm_min
 
     time.sleep(minutes_remaining*60-1)
 
-    with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
-        server.login(sender_email, password)
-        server.sendmail(sender_email, reciever_email, msg)
+    send_mail(msg)
+
+    
+
