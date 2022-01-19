@@ -13,7 +13,7 @@ def scrap():
         price_cell = columns[1]
         price = price_cell.select("font")[0].text.replace(" ", "")
 
-        prices.append(int(float(price)*1000))
+        prices.append(float(price))
 
     return prices
 

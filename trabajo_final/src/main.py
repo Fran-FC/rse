@@ -28,7 +28,7 @@ def main():
         th_1 = threading.Thread(target=notify_cheapest_hour, args=(price_min, hour_min))
         th_1.start()
 
-        minutes_remaining = 24*60-hour*60-localtime.tm_min
+        minutes_remaining = 23*60-hour*60-localtime.tm_min
         time.sleep(minutes_remaining*60) # wait until 00:00 hours of next day
 
         

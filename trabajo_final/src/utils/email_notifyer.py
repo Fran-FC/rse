@@ -24,16 +24,17 @@ def send_mail(msg):
         server.sendmail(sender_email, reciever_email, msg)
 
 def notify_cheapest_hour(price_min, hour_min):
-    price_min = price_min/1000
+    price_min = price_min
     msg = "Subject: Precio de la luz mas barato\n\nEl precio mas bajo es {0}kW/h a las {1} horas\nTabla de precios en: http://www.tarifadeluz.com".format(price_min, hour_min)
 
+    # first we send an email at the beginning of a day (00:00)
     send_mail(msg)
 
+    # we send another mail when the cheapest hour comes 
     if hour_min == 0:
         hour_min = 24
-    minutes_remaining = hour_min*60-time.localtime().tm_hour*60-time.localtime().tm_min
-
-    time.sleep(minutes_remaining*60-1)
+    minutes_remaining = (hour_min-1)*60-time.localtime().tm_hour*60-time.localtime().tm_min
+    time.sleep(minutes_remaining*60) # sleep in seconds
 
     send_mail(msg)
 
