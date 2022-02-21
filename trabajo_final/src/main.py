@@ -9,7 +9,6 @@ def check(ini=0):
     price_min = prices[0]
     hour_min = 0
 
-    print("From {} to {} hours".format(ini, len(prices)))
     for i in range(ini, len(prices)):
         if(price_min > prices[i]):
             price_min = prices[i]
